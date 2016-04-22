@@ -23,7 +23,7 @@ ifeq ($(config),debug64)
   OBJDIR     = obj/x64/Debug/picasso2_sw
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/libpicasso2_sw.so
-  DEFINES   += -D_DEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT -DIS_64BIT
+  DEFINES   += -D_DEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../src -I../src/include -I../src/simd -I../src/gfx
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g -Wall -msse2 -m64 -fPIC
@@ -45,7 +45,7 @@ ifeq ($(config),release64)
   OBJDIR     = obj/x64/Release/picasso2_sw
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/libpicasso2_sw.so
-  DEFINES   += -DNDEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT -DIS_64BIT
+  DEFINES   += -DNDEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../src -I../src/include -I../src/simd -I../src/gfx
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -O2 -Wall -msse2 -m64 -fPIC
@@ -113,6 +113,16 @@ OBJECTS := \
 	$(OBJDIR)/graphic_path.o \
 	$(OBJDIR)/device.o \
 	$(OBJDIR)/clipper.o \
+	$(OBJDIR)/gfx_font_adapter_win32.o \
+	$(OBJDIR)/gfx_font_load_freetype2.o \
+	$(OBJDIR)/gfx_image_filters.o \
+	$(OBJDIR)/gfx_raster_adapter.o \
+	$(OBJDIR)/gfx_rendering_buffer.o \
+	$(OBJDIR)/gfx_device.o \
+	$(OBJDIR)/gfx_sqrt_tables.o \
+	$(OBJDIR)/gfx_font_adapter_freetype2.o \
+	$(OBJDIR)/gfx_blur.o \
+	$(OBJDIR)/gfx_gradient_adapter.o \
 	$(OBJDIR)/picasso_gradient.o \
 	$(OBJDIR)/picasso_rendering_buffer.o \
 	$(OBJDIR)/picasso_image.o \
@@ -202,6 +212,36 @@ $(OBJDIR)/device.o: ../src/core/device.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/clipper.o: ../src/core/clipper.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_font_adapter_win32.o: ../src/gfx/gfx_font_adapter_win32.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_font_load_freetype2.o: ../src/gfx/gfx_font_load_freetype2.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_image_filters.o: ../src/gfx/gfx_image_filters.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_raster_adapter.o: ../src/gfx/gfx_raster_adapter.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_rendering_buffer.o: ../src/gfx/gfx_rendering_buffer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_device.o: ../src/gfx/gfx_device.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_sqrt_tables.o: ../src/gfx/gfx_sqrt_tables.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_font_adapter_freetype2.o: ../src/gfx/gfx_font_adapter_freetype2.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_blur.o: ../src/gfx/gfx_blur.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gfx_gradient_adapter.o: ../src/gfx/gfx_gradient_adapter.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/picasso_gradient.o: ../src/picasso_gradient.cpp

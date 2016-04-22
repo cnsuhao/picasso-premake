@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := picasso2_sw zlib png gif jpeg psx_image psxm_image_gif psxm_image_jpeg psxm_image_png
+PROJECTS := picasso2_sw zlib png gif jpeg psx_image psxm_image_gif psxm_image_jpeg psxm_image_png blur
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -48,6 +48,10 @@ psxm_image_png: png psx_image
 	@echo "==== Building psxm_image_png ($(config)) ===="
 	@${MAKE} --no-print-directory -C . -f psxm_image_png.make
 
+blur: picasso2_sw
+	@echo "==== Building blur ($(config)) ===="
+	@${MAKE} --no-print-directory -C . -f blur.make
+
 clean:
 	@${MAKE} --no-print-directory -C . -f picasso2_sw.make clean
 	@${MAKE} --no-print-directory -C . -f zlib.make clean
@@ -58,6 +62,7 @@ clean:
 	@${MAKE} --no-print-directory -C . -f psxm_image_gif.make clean
 	@${MAKE} --no-print-directory -C . -f psxm_image_jpeg.make clean
 	@${MAKE} --no-print-directory -C . -f psxm_image_png.make clean
+	@${MAKE} --no-print-directory -C . -f blur.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -80,5 +85,6 @@ help:
 	@echo "   psxm_image_gif"
 	@echo "   psxm_image_jpeg"
 	@echo "   psxm_image_png"
+	@echo "   blur"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

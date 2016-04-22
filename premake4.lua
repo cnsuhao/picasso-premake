@@ -18,11 +18,9 @@ solution "picasso"
         targetdir("pmbuild")
 		defines { "EXPORT" }
 		includedirs { "include","build","src","src/include","src/simd","src/gfx"}
-		files {"src/core/*.cpp", "src/gfc/*.cpp", "src/*.cpp"}
+		files {"src/core/*.cpp", "src/gfx/*.cpp", "src/*.cpp"}
 		links {"freetype", "fontconfig"}
-		
-        configuration "x64"
-            defines { "IS_64BIT" }
+
 	
     project "zlib"
         language "C"
@@ -41,12 +39,7 @@ solution "picasso"
                 "third_party/zlib-1.2.8/trees.c",
                 "third_party/zlib-1.2.8/uncompr.c",
                 "third_party/zlib-1.2.8/zutil.c" }
-        
-        configuration "Debug"
-			flags { "Symbols", "ExtraWarnings"}
 
-		configuration "Release"
-			flags { "Optimize", "ExtraWarnings"}
     project "png"
         language "C"
         kind "SharedLib"
@@ -70,11 +63,7 @@ solution "picasso"
             "third_party/libpng-1.6.17/pngwrite.c",
             "third_party/libpng-1.6.17/pngwtran.c",
             "third_party/libpng-1.6.17/pngwutil.c"}
-        configuration "Debug"
-			flags { "Symbols", "ExtraWarnings"}
 
-		configuration "Release"
-			flags { "Optimize", "ExtraWarnings"}
   
     project "gif"
         language "C"
@@ -83,11 +72,6 @@ solution "picasso"
         includedirs {"third_party/giflib-5.1.3/lib"}
         files {"third_party/giflib-5.1.3/lib/*.c"}
         
-        configuration "Debug"
-			flags { "Symbols", "ExtraWarnings"}
-
-		configuration "Release"
-			flags { "Optimize", "ExtraWarnings"}
             
     project "jpeg"
         language "C"
@@ -148,11 +132,6 @@ solution "picasso"
             "third_party/libjpeg-turbo-1.4.1/jdatadst-tj.c",
             "third_party/libjpeg-turbo-1.4.1/jdatasrc-tj.c",
             "third_party/libjpeg-turbo-1.4.1/jsimd_none.c"}
-        configuration "Debug"
-			flags { "Symbols", "ExtraWarnings"}
-
-		configuration "Release"
-			flags { "Optimize", "ExtraWarnings"}
        
        
     project "psx_image"
@@ -163,12 +142,6 @@ solution "picasso"
             libdirs {"pmbuild"}
             links {"picasso2_sw", "dl"}
             files {"ext/image_loader/*.c"}
-            
-            configuration "Debug"
-                flags { "Symbols", "ExtraWarnings"}
-
-            configuration "Release"
-                flags { "Optimize", "ExtraWarnings"}
                 
         
     project "psxm_image_gif"
@@ -179,15 +152,7 @@ solution "picasso"
             includedirs {"include", "build", "ext/image_loader" , "third_party/giflib-5.1.3/lib"}
             files {"ext/image_loader/gif/*.c"}
             libdirs {"pmbuild"}
-            links { "gif", "psx_image", "dl"}
-            configuration "Debug"
-                flags { "Symbols", "ExtraWarnings"}
-
-            configuration "Release"
-                flags { "Optimize", "ExtraWarnings"}
-                
-                
-                
+            links { "gif", "psx_image", "dl"}          
              
     project "psxm_image_jpeg"
         language "C"
@@ -198,11 +163,6 @@ solution "picasso"
             files {"ext/image_loader/jpeg/*.c"}
             libdirs {"pmbuild"}
             links { "jpeg", "psx_image", "dl"}
-            configuration "Debug"
-                flags { "Symbols", "ExtraWarnings"}
-
-            configuration "Release"
-                flags { "Optimize", "ExtraWarnings"}
          
          
     project "psxm_image_png"
@@ -214,8 +174,24 @@ solution "picasso"
             files {"ext/image_loader/png/*.c"}
             libdirs {"pmbuild"}
             links { "png", "psx_image", "dl"}
-            configuration "Debug"
-                flags { "Symbols", "ExtraWarnings"}
+            
+    project "blur"
+        language "c"
+            targetdir("pmbuild")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"pmbuild"}
+            files {"test/blur_func"}
+            links { "freetype", "z", "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+			    linkoptions { "`pkg-config --libs gtk+-2.0`" }
+                
+                
 
-            configuration "Release"
-                flags { "Optimize", "ExtraWarnings"}
+
+
+
+
