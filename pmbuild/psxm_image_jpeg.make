@@ -21,7 +21,7 @@ endif
 
 ifeq ($(config),debug64)
   OBJDIR     = obj/x64/Debug/psxm_image_jpeg
-  TARGETDIR  = .
+  TARGETDIR  = modules
   TARGET     = $(TARGETDIR)/libpsxm_image_jpeg.so
   DEFINES   += -D_DEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../ext/image_loader -I../third_party/libjpeg-turbo-1.4.1 -I../third_party/libjpeg-turbo-1.4.1/build -I../third_party/libjpeg-turbo-1.4.1/simd
@@ -43,7 +43,7 @@ endif
 
 ifeq ($(config),release64)
   OBJDIR     = obj/x64/Release/psxm_image_jpeg
-  TARGETDIR  = .
+  TARGETDIR  = modules
   TARGET     = $(TARGETDIR)/libpsxm_image_jpeg.so
   DEFINES   += -DNDEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../ext/image_loader -I../third_party/libjpeg-turbo-1.4.1 -I../third_party/libjpeg-turbo-1.4.1/build -I../third_party/libjpeg-turbo-1.4.1/simd
@@ -65,7 +65,7 @@ endif
 
 ifeq ($(config),debug32)
   OBJDIR     = obj/x32/Debug/psxm_image_jpeg
-  TARGETDIR  = .
+  TARGETDIR  = modules
   TARGET     = $(TARGETDIR)/libpsxm_image_jpeg.so
   DEFINES   += -D_DEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../ext/image_loader -I../third_party/libjpeg-turbo-1.4.1 -I../third_party/libjpeg-turbo-1.4.1/build -I../third_party/libjpeg-turbo-1.4.1/simd
@@ -87,7 +87,7 @@ endif
 
 ifeq ($(config),release32)
   OBJDIR     = obj/x32/Release/psxm_image_jpeg
-  TARGETDIR  = .
+  TARGETDIR  = modules
   TARGET     = $(TARGETDIR)/libpsxm_image_jpeg.so
   DEFINES   += -DNDEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../ext/image_loader -I../third_party/libjpeg-turbo-1.4.1 -I../third_party/libjpeg-turbo-1.4.1/build -I../third_party/libjpeg-turbo-1.4.1/simd

@@ -21,7 +21,7 @@ endif
 
 ifeq ($(config),debug64)
   OBJDIR     = obj/x64/Debug/psxm_image_gif
-  TARGETDIR  = .
+  TARGETDIR  = modules
   TARGET     = $(TARGETDIR)/libpsxm_image_gif.so
   DEFINES   += -D_DEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../ext/image_loader -I../third_party/giflib-5.1.3/lib
@@ -43,7 +43,7 @@ endif
 
 ifeq ($(config),release64)
   OBJDIR     = obj/x64/Release/psxm_image_gif
-  TARGETDIR  = .
+  TARGETDIR  = modules
   TARGET     = $(TARGETDIR)/libpsxm_image_gif.so
   DEFINES   += -DNDEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../ext/image_loader -I../third_party/giflib-5.1.3/lib
@@ -65,7 +65,7 @@ endif
 
 ifeq ($(config),debug32)
   OBJDIR     = obj/x32/Debug/psxm_image_gif
-  TARGETDIR  = .
+  TARGETDIR  = modules
   TARGET     = $(TARGETDIR)/libpsxm_image_gif.so
   DEFINES   += -D_DEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../ext/image_loader -I../third_party/giflib-5.1.3/lib
@@ -87,7 +87,7 @@ endif
 
 ifeq ($(config),release32)
   OBJDIR     = obj/x32/Release/psxm_image_gif
-  TARGETDIR  = .
+  TARGETDIR  = modules
   TARGET     = $(TARGETDIR)/libpsxm_image_gif.so
   DEFINES   += -DNDEBUG -DENABLE_FREE_TYPE2=1 -DENABLE_FONT_CONFIG=1 -DEXPORT
   INCLUDES  += -I../include -I../build -I../ext/image_loader -I../third_party/giflib-5.1.3/lib
