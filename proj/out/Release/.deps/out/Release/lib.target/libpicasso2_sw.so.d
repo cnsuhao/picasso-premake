@@ -1,0 +1,1 @@
+cmd_out/Release/lib.target/libpicasso2_sw.so := ln -f "out/Release/obj.target/libpicasso2_sw.so" "out/Release/lib.target/libpicasso2_sw.so" 2>/dev/null || (rm -rf "out/Release/lib.target/libpicasso2_sw.so" && cp -af "out/Release/obj.target/libpicasso2_sw.so" "out/Release/lib.target/libpicasso2_sw.so")
