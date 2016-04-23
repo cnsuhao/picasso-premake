@@ -183,8 +183,8 @@ solution "picasso"
             configuration {"windows"}
                 includedirs {"third_party/libpng-1.6.17"}
                 libdirs {"bin"}
-            
-            configuration { "linux" } --png 1.6.17 crash with png 1.2.54 that gtk2.0 rely on.
+            --png 1.6.17 crash with png 1.2.54 that gtk2.0 rely on.
+            configuration { "linux" } 
                 links { "dl" }
             
     project "blur"
