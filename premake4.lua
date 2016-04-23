@@ -1,7 +1,7 @@
 local action = _ACTION or ""
 
 solution "picasso"
-	location ( "pmbuild" )
+	location ( "proj" )
 	configurations { "Debug", "Release" }
 	platforms {"x64", "x32"}
     configuration "Debug"
@@ -15,7 +15,7 @@ solution "picasso"
 	project "picasso2_sw"
 		language "C++"
 		kind "SharedLib"
-        targetdir("pmbuild")
+        targetdir("bin")
 		defines { "EXPORT" }
 		includedirs { "include","build","src","src/include","src/simd","src/gfx"}
 		files {"src/core/*.cpp", "src/gfx/*.cpp", "src/*.cpp"}
@@ -25,7 +25,7 @@ solution "picasso"
     project "zlib"
         language "C"
         kind "SharedLib"
-        targetdir("pmbuild")
+        targetdir("bin")
         includedirs {"third_party/zlib-1.2.8"}
         defines {"ZLIB_DLL"}
         files { "third_party/zlib-1.2.8/adler32.c",
@@ -40,12 +40,12 @@ solution "picasso"
                 "third_party/zlib-1.2.8/uncompr.c",
                 "third_party/zlib-1.2.8/zutil.c" }
 
-    project "png"
+    project "pngt"
         language "C"
         kind "SharedLib"
-        targetdir("pmbuild")
+        targetdir("bin")
         includedirs {"third_party/libpng-1.6.17"}
-        libdirs { "pmbuild" }
+        libdirs { "bin" }
         defines {"ZLIB_DLL"}
         links{ "zlib" }
         files{"third_party/libpng-1.6.17/png.c",
@@ -68,7 +68,7 @@ solution "picasso"
     project "gif"
         language "C"
         kind "SharedLib"
-        targetdir("pmbuild")
+        targetdir("bin")
         includedirs {"third_party/giflib-5.1.3/lib"}
         files {"third_party/giflib-5.1.3/lib/*.c"}
         
@@ -76,7 +76,7 @@ solution "picasso"
     project "jpeg"
         language "C"
         kind "SharedLib"
-        targetdir("pmbuild")
+        targetdir("bin")
         includedirs{"third_party/libjpeg-turbo-1.4.1", "third_party/libjpeg-turbo-1.4.1/build", "third_party/libjpeg-turbo-1.4.1/simd"}
         files {"third_party/libjpeg-turbo-1.4.1/jcapimin.c",
             "third_party/libjpeg-turbo-1.4.1/jcapistd.c",
@@ -137,61 +137,362 @@ solution "picasso"
     project "psx_image"
         language "C"
             kind "SharedLib"
-            targetdir("pmbuild")
+            targetdir("bin")
             includedirs {"include", "build" , "ext/image_loader"}
-            libdirs {"pmbuild"}
-            links {"picasso2_sw", "dl"}
+            libdirs {"bin"}
+            links {"picasso2_sw"}
             files {"ext/image_loader/*.c"}
-                
+            configuration { "linux" }
+                links { "dl" }
         
     project "psxm_image_gif"
         language "C"
-            targetdir("pmbuild/modules")
+            targetdir("bin/modules")
             kind "SharedLib"
             defines {"EXPORT"}
             includedirs {"include", "build", "ext/image_loader" , "third_party/giflib-5.1.3/lib"}
             files {"ext/image_loader/gif/*.c"}
-            libdirs {"pmbuild"}
-            links { "gif", "psx_image", "dl"}          
+            libdirs {"bin"}
+            links { "gif", "psx_image"}
+            configuration { "linux" }
+                links { "dl" }          
+                linkoptions { " -Wl,-rpath=../" }
              
     project "psxm_image_jpeg"
         language "C"
-            targetdir("pmbuild/modules")
+            targetdir("bin/modules")
             kind "SharedLib"
             defines {"EXPORT"}
             includedirs {"include", "build", "ext/image_loader" , "third_party/libjpeg-turbo-1.4.1", "third_party/libjpeg-turbo-1.4.1/build", "third_party/libjpeg-turbo-1.4.1/simd"}
             files {"ext/image_loader/jpeg/*.c"}
-            libdirs {"pmbuild"}
-            links { "jpeg", "psx_image", "dl"}
-         
+            libdirs {"bin"}
+            links { "jpeg", "psx_image"}
+            configuration { "linux" }
+                links { "dl" }
+                linkoptions { " -Wl,-rpath=../" }        
          
     project "psxm_image_png"
         language "C"
-            targetdir("pmbuild/modules")
+            targetdir("bin/modules")
             kind "SharedLib"
             defines {"EXPORT"}
             includedirs {"include", "build", "ext/image_loader" , "third_party/libpng-1.6.17"}
             files {"ext/image_loader/png/*.c"}
-            libdirs {"pmbuild"}
-            links { "png", "psx_image", "dl"}
+            libdirs {"bin"}
+            links { "pngt", "psx_image"}
+            configuration { "linux" }
+                links { "dl" }
+                linkoptions { " -Wl,-rpath=../" }
             
     project "blur"
-        language "c"
-            targetdir("pmbuild")
+        language "C"
+            targetdir("bin")
             kind "WindowedApp"
             includedirs {"include", "build", "test"}
-            libdirs {"pmbuild"}
-            files {"test/blur_func"}
-            links { "freetype", "z", "picasso2_sw"}
+            libdirs {"bin"}
+            files {"test/blur_func.c"}
+            links { "picasso2_sw"}
             
             configuration { "linux" }
                 files{"test/testGtk2.c"}
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
-			    linkoptions { "`pkg-config --libs gtk+-2.0`" }
+			    linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
                 
+    project "shadow"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/shadow_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+
+    project "text"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/text_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
                 
+    project "threads"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/thread_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c", "test/thr_posix.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"pthread", "z", "freetype"}
+    project "image_info"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/image_info.c"}
+            links { "picasso2_sw", "psx_image"}
+            
+            configuration { "linux" }
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype", "fontconfig", "dl"}
 
+    project "image_view"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/image_view.c"}
+            links { "picasso2_sw", "psx_image"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype", "dl"}
 
+    project "pattern"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/pattern_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+                
+    project "path"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/path_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}                
+                
+    project "part"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/part_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}    
+                
+    project "mask"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/mask_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}    
 
+    project "gradient"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/gradient_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"} 
 
+    project "gcstate"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/gcstate_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
 
+    project "gamma"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/gamma_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+
+    project "composite"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/composite_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+
+    project "clip"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/clip_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+
+    project "bitblt"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/bitblt_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+
+    project "alpha"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/alpha_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+                
+    project "clock"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"demos/clock.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"demos/platform_gtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+
+    project "flowers"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"demos/flowers.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"demos/platform_gtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+
+    project "subwaymap"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"demos/subwaymap.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"demos/platform_gtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}
+
+    project "tiger"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"demos/tiger.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"demos/platform_gtk2.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype"}

@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 
     path = argv[1];
     if (!path || argc < 3) {
-        fprintf(stderr, "usage: image_info.exe  <in_filename> <out_filename> <type>\n");
+        fprintf(stderr, "usage: image_info  <in_filename> <out_filename> <type>\n");
         return -1;
     }
 

@@ -219,9 +219,9 @@ char* _module_get_modules_dir(char* path_buffer, size_t buffer_size)
     char* path_seek = NULL;
     size_t length = 0;
 
-    if ((stat("/usr/lib/modules", &info) == 0) && S_ISDIR(info.st_mode)){
+    if ((stat("./modules", &info) == 0) && S_ISDIR(info.st_mode)){
         if (buffer_size > 24) {
-            strncpy(path_buffer, "/usr/lib/modules/", buffer_size);
+            strncpy(path_buffer, "./modules/", buffer_size);
             return path_buffer;
         } else
             return NULL;
