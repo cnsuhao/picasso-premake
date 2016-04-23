@@ -40,7 +40,7 @@ solution "picasso"
                 "third_party/zlib-1.2.8/uncompr.c",
                 "third_party/zlib-1.2.8/zutil.c" }
 
-    project "pngt"
+    project "png"
         language "C"
         kind "SharedLib"
         targetdir("bin")
@@ -176,13 +176,16 @@ solution "picasso"
             targetdir("bin/modules")
             kind "SharedLib"
             defines {"EXPORT"}
-            includedirs {"include", "build", "ext/image_loader" , "third_party/libpng-1.6.17"}
+            includedirs {"include", "build", "ext/image_loader"}
             files {"ext/image_loader/png/*.c"}
-            libdirs {"bin"}
-            links { "pngt", "psx_image"}
+            links { "png", "psx_image"}
+            
+            configuration {"windows"}
+                includedirs {"third_party/libpng-1.6.17"}
+                libdirs {"bin"}
+            
             configuration { "linux" }
                 links { "dl" }
-                linkoptions { " -Wl,-rpath=../" }
             
     project "blur"
         language "C"
@@ -243,6 +246,7 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"pthread", "z", "freetype"}
+                
     project "image_info"
         language "C"
             targetdir("bin")
