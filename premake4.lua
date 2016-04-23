@@ -11,7 +11,7 @@ solution "picasso"
 	configuration "Release"
 		defines { "NDEBUG" , "ENABLE_FREE_TYPE2=1", "ENABLE_FONT_CONFIG=1"}
 		flags { "Optimize", "ExtraWarnings", "EnableSSE2"}
-
+  
 	project "picasso2_sw"
 		language "C++"
 		kind "SharedLib"
