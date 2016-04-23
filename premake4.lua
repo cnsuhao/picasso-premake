@@ -19,7 +19,10 @@ solution "picasso"
 		defines { "EXPORT" }
 		includedirs { "include","build","src","src/include","src/simd","src/gfx"}
 		files {"src/core/*.cpp", "src/gfx/*.cpp", "src/*.cpp"}
-		links {"freetype", "fontconfig"}
+        configuration { "linux" }
+		        links { "freetype", "fontconfig"}
+        configuration { "windows" }
+                files { "src/picasso.def", "src/picasso.rc"}
 
 	
     project "zlib"
@@ -39,6 +42,14 @@ solution "picasso"
                 "third_party/zlib-1.2.8/trees.c",
                 "third_party/zlib-1.2.8/uncompr.c",
                 "third_party/zlib-1.2.8/zutil.c" }
+        configuration { "windows" }
+            files {"third_party/zlib-1.2.8/gzclose.c",
+                "third_party/zlib-1.2.8/gzlib.c",
+                "third_party/zlib-1.2.8/gzread.c",
+                "third_party/zlib-1.2.8/gzwrite.c",
+                "third_party/zlib-1.2.8/win32/zlib.def",
+                "third_party/zlib-1.2.8/win32/zlib1.rc"}
+                
 
     project "png"
         language "C"
@@ -63,6 +74,9 @@ solution "picasso"
             "third_party/libpng-1.6.17/pngwrite.c",
             "third_party/libpng-1.6.17/pngwtran.c",
             "third_party/libpng-1.6.17/pngwutil.c"}
+        configuration {"windows"}
+            files {"third_party/libpng-1.6.17/scripts/pngwin.rc",
+                "third_party/libpng-1.6.17/scripts/symbols.def"}
 
   
     project "gif"
@@ -71,6 +85,8 @@ solution "picasso"
         targetdir("bin")
         includedirs {"third_party/giflib-5.1.3/lib"}
         files {"third_party/giflib-5.1.3/lib/*.c"}
+        configuration {"windows"}
+            files {"third_party/giflib-5.1.3/gif_lib.def"}
         
             
     project "jpeg"
@@ -132,6 +148,9 @@ solution "picasso"
             "third_party/libjpeg-turbo-1.4.1/jdatadst-tj.c",
             "third_party/libjpeg-turbo-1.4.1/jdatasrc-tj.c",
             "third_party/libjpeg-turbo-1.4.1/jsimd_none.c"}
+            configuration {"windows"}
+                files{"third_party/libjpeg-turbo-1.4.1/win/jpeg8.def"}
+                defines{"HAVE_BOOLEAN", "XMD_H"}
        
        
     project "psx_image"
@@ -144,6 +163,10 @@ solution "picasso"
             files {"ext/image_loader/*.c"}
             configuration { "linux" }
                 links { "dl" }
+            configuration {"windows" }
+                files {"ext/image_loader/psx_image.rc",
+                    "ext/image_loader/psx_image.def",
+                    "ext/image_loader/resource.h"}
         
     project "psxm_image_gif"
         language "C"
@@ -169,7 +192,9 @@ solution "picasso"
             links { "jpeg", "psx_image"}
             configuration { "linux" }
                 links { "dl" }
-                linkoptions { " -Wl,-rpath=../" }        
+                linkoptions { " -Wl,-rpath=../" }  
+            configuration {"windows"}
+                defines{"HAVE_BOOLEAN", "XMD_H"}      
          
     project "psxm_image_png"
         language "C"
