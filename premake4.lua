@@ -174,7 +174,7 @@ solution "picasso"
             kind "SharedLib"
             defines {"EXPORT"}
             includedirs {"include", "build", "ext/image_loader" , "third_party/giflib-5.1.3/lib"}
-            files {"ext/image_loader/gif/*.c"}
+            files {"ext/image_loader/gif/*.c", "ext/image_loader/psx_image_io.c"}
             libdirs {"bin"}
             links { "gif", "psx_image"}
             configuration { "linux" }
@@ -187,7 +187,7 @@ solution "picasso"
             kind "SharedLib"
             defines {"EXPORT"}
             includedirs {"include", "build", "ext/image_loader" , "third_party/libjpeg-turbo-1.4.1", "third_party/libjpeg-turbo-1.4.1/build", "third_party/libjpeg-turbo-1.4.1/simd"}
-            files {"ext/image_loader/jpeg/*.c"}
+            files {"ext/image_loader/jpeg/*.c", "ext/image_loader/psx_image_io.c"}
             libdirs {"bin"}
             links { "jpeg", "psx_image"}
             configuration { "linux" }
@@ -202,7 +202,7 @@ solution "picasso"
             kind "SharedLib"
             defines {"EXPORT"}
             includedirs {"include", "build", "ext/image_loader"}
-            files {"ext/image_loader/png/*.c"}
+            files {"ext/image_loader/png/*.c", "ext/image_loader/psx_image_io.c"}
             links { "png", "psx_image"}
             
             configuration {"windows"}
