@@ -78,9 +78,10 @@ solution "picasso"
             "third_party/libpng-1.6.17/pngwrite.c",
             "third_party/libpng-1.6.17/pngwtran.c",
             "third_party/libpng-1.6.17/pngwutil.c"}
+            os.copyfile("third_party/libpng-1.6.17/scripts/pnglibconf.h.prebuilt",
+            "third_party/libpng-1.6.17/pnglibconf.h")
         configuration {"windows"}
-            files {"third_party/libpng-1.6.17/scripts/pngwin.rc",
-                "third_party/libpng-1.6.17/scripts/symbols.def"}
+            files {"third_party/libpng-1.6.17/scripts/pngwin.rc"}
 
   
     project "gif"
@@ -272,24 +273,6 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
-            configuration {"windows"}
-                files{"test/testWin.c"}
-                flags{"WinMain", "Unicode", "NoNativeWChar"}
-                
-    project "threads"
-        language "C"
-            targetdir("bin")
-            kind "WindowedApp"
-            includedirs {"include", "build", "test"}
-            libdirs {"bin"}
-            files {"test/thread_func.c"}
-            links { "picasso2_sw"}
-            
-            configuration { "linux" }
-                files{"test/testGtk2.c", "test/thr_posix.c"}
-                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
-                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
-                links {"pthread", "z", "freetype"}
             configuration {"windows"}
                 files{"test/testWin.c"}
                 flags{"WinMain", "Unicode", "NoNativeWChar"}
