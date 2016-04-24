@@ -2,8 +2,9 @@ Picasso 是一款跨平台的高级二维矢量绘图引擎。Picasso提供平�
 ### 原作者信息
 - [作者的CSDN博客] (http://blog.csdn.net/onecoolx/article/details/9156531)
  
-### 原版项目地址
 - [Picasso.Github] (https://github.com/onecoolx/picasso)
+
+
 =================================================
 
 ### **svg rendering**
