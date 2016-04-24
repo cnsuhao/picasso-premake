@@ -15,7 +15,7 @@ Picasso 是一款跨平台的高级二维矢量绘图引擎。Picasso提供平�
 ### 编译方法
 
 *   如果是Linux 需要 freetype fonconfig， 编译示例还需要gtk2.0 的dev软件包。
-```bash
+``` bash
 premake4 gmake #Linux 
 cd proj
 make #通过make help 命令获得更多选项
