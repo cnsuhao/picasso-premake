@@ -9,9 +9,7 @@ static ps_image * pi;
 static ps_pattern * pt;
 void draw_test (int id, ps_context* gc)
 {
-    ps_rect cr = {2.3f, 4.5f, 187.7f, 161.5f};
-    //ps_rect cr2 = {120, 120, 200, 200};
-    ps_color col = {1, 0, 0, 1};
+    ps_rect cr = {2.3f, 4.5f, 387.7f, 361.5f};
 
     ps_save(gc);
     ps_set_blur(gc, 0.2f);
@@ -36,9 +34,6 @@ void draw_test (int id, ps_context* gc)
 
     ps_identity(gc);
     ps_translate(gc, 200, 200);
-    ps_set_source_color(gc, &col);
-    ps_rectangle(gc, &cr);
-    ps_fill(gc);
 }
 
 void init_context (ps_context* gc, ps_canvas* cs, unsigned char* buf)

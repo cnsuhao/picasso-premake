@@ -10,7 +10,7 @@ static ps_pattern * pt;
 static ps_canvas * cx;
 void draw_test (int id, ps_context* gc)
 {
-    ps_rect cr = {2.3f, 4.7f, 187.7f, 161.5f};
+    ps_rect cr = {2.3f, 4.7f, 387.7f, 361.5f};
     ps_rect cr2 = {20, 20, 120, 80};
     ps_color col = {1, 0, 0, 1};
     ps_color sol = {0, 0, 0, 1};

@@ -8,7 +8,7 @@ solution "picasso"
         defines {"WIN32", "DLL_EXPORT", "__SSE2__=1", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS", "ENABLE_FAST_COPY=1"}
     configuration {"linux"}
         defines { "ENABLE_FREE_TYPE2=1", "ENABLE_FONT_CONFIG=1"}
-        buildoptions {"-fno-rtti", "-fno-exceptions", "-Wno-unused-result"}
+        buildoptions {"-fno-exceptions", "-Wno-unused-result"}
     configuration {"Debug"}
         flags { "Symbols", "EnableSSE2"}
         defines {"_DEBUG" }
@@ -409,7 +409,7 @@ solution "picasso"
             links { "picasso2_sw"}
             
             configuration { "linux" }
-                files{"test/testGtk2.c", "thr_posix.c"}
+                files{"test/testGtk2.c", "test/thr_posix.c"}
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype", "pthread"} 
