@@ -10,7 +10,7 @@ Picasso 是一款跨平台的高级二维矢量绘图引擎。Picasso提供平�
 *   premake已经支持 Linux，32位Windows应用程序(平台Win10, VS2015)，由于VS的64位模式中long仍然是4字节，导致指针截断(未修补)。
 *   修改部分源文件，避免在Linux Windows上编译时发生的一些错误。
 *   编译后的示例都在bin目录，其中有两个运行脚本。
-*   Re De email:m45407836@163.com
+*   Re De emailto:m45407836@163.com
 
 ### 编译方法
 
