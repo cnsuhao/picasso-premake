@@ -52,8 +52,8 @@ static void init_pixbuf()
 {
     GError * e = 0;
     pixbuf = gdk_pixbuf_new(GDK_COLORSPACE_RGB, FALSE, 8, 640, 480);
-    pixa = gdk_pixbuf_new_from_file("selt2.png", &e); 
-    pixb = gdk_pixbuf_new_from_file("pat.png", &e); 
+    pixa = gdk_pixbuf_new_from_file("1.png", &e); 
+    pixb = gdk_pixbuf_new_from_file("2.png", &e); 
 
     guchar* buf = gdk_pixbuf_get_pixels(pixbuf);
     canvas = ps_canvas_create_with_data((ps_byte*)buf, COLOR_FORMAT_RGB, 640, 480, 640*3);

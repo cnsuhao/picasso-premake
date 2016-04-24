@@ -398,6 +398,24 @@ solution "picasso"
             configuration {"windows"}
                 files{"test/testWin.c"}
                 flags{"WinMain", "Unicode", "NoNativeWChar"}
+                
+    project "threads"
+        language "C"
+            targetdir("bin")
+            kind "WindowedApp"
+            includedirs {"include", "build", "test"}
+            libdirs {"bin"}
+            files {"test/thread_func.c"}
+            links { "picasso2_sw"}
+            
+            configuration { "linux" }
+                files{"test/testGtk2.c", "thr_posix.c"}
+                buildoptions {"`pkg-config --cflags gtk+-2.0`" }
+                linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
+                links {"z", "freetype", "pthread"} 
+            configuration {"windows"}
+                files{"test/testWin.c", "test/thr_win32.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "gcstate"
         language "C"

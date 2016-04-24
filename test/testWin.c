@@ -93,11 +93,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     unsigned int tsize;
     hInst = hInstance; // Store instance handle in our global variable
     
-    sbmp = (HBITMAP)LoadImage(hInstance, L"selt2.bmp", IMAGE_BITMAP, 0 , 0, LR_LOADFROMFILE | LR_DEFAULTCOLOR);
+    sbmp = (HBITMAP)LoadImage(hInstance, L"1.bmp", IMAGE_BITMAP, 0 , 0, LR_LOADFROMFILE | LR_DEFAULTCOLOR);
     
     GetObject(sbmp, sizeof(BITMAP), (LPVOID)&ibmp);
     
-    tbmp = (HBITMAP)LoadImage(hInstance, L"pat.bmp", IMAGE_BITMAP, 0 , 0, LR_LOADFROMFILE | LR_DEFAULTCOLOR);
+    tbmp = (HBITMAP)LoadImage(hInstance, L"2.bmp", IMAGE_BITMAP, 0 , 0, LR_LOADFROMFILE | LR_DEFAULTCOLOR);
     
     GetObject(tbmp, sizeof(BITMAP), (LPVOID)&abmp);
     

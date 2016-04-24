@@ -1,7 +1,7 @@
 echo require psx_image and modules : psxm_image_gif psxm_image_png psxm_image_jpeg
 
-image_view quitegirl.gif
+image_view 2.gif
 
-image_view BombSquad.jpg
+image_view 1.jpg
 
-image_view selt.png
+image_view 2.png
