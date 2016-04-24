@@ -83,7 +83,7 @@ void _module_unload(module_handle module)
 }
 
 static wchar_t* _get_current_path(wchar_t* buffer, size_t len, size_t* rlen)
-{
+{ 
     wchar_t *p = 0;
     *rlen = GetModuleFileName(NULL, buffer, len);
     p = wcsrchr(buffer, '\\');

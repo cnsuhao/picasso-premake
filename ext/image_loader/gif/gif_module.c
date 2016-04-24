@@ -517,7 +517,7 @@ static wchar_t* get_library_path(void)
     wchar_t *p = 0;
     memset(g_path, 0, sizeof(wchar_t) * MAX_PATH);
     GetModuleFileName(NULL, g_path, MAX_PATH);
-    p = wcsrchr(g_path, '\\');
+    p = wcsrchr(g_path, L'\\');
     p++; *p = 0;
     lstrcat(g_path, L"psx_image.dll");
     return g_path;

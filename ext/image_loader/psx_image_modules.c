@@ -17,7 +17,7 @@
 typedef void (*mod_func)(void);
 
 static pchar modules_dir[PATH_MAX];
-
+    
 int modules_init(struct image_modules_mgr* mgr)
 {
     pchar* dir_path = NULL;

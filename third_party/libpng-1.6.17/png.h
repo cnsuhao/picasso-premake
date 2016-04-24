@@ -3291,3 +3291,4 @@ PNG_EXPORT(244, int, png_set_option, (png_structrp png_ptr, int option,
 #endif /* PNG_VERSION_INFO_ONLY */
 /* Do not put anything past this line */
 #endif /* PNG_H */
+

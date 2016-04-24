@@ -4,13 +4,17 @@ solution "picasso"
 	location ( "proj" )
 	configurations { "Debug", "Release" }
 	platforms {"x64", "x32"}
-    configuration "Debug"
-		defines { "_DEBUG" , "ENABLE_FREE_TYPE2=1", "ENABLE_FONT_CONFIG=1"}
-		flags { "Symbols", "ExtraWarnings", "EnableSSE2"}
-
+    configuration {"windows"}
+        defines {"WIN32", "DLL_EXPORT", "__SSE2__=1", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS", "ENABLE_FAST_COPY=1"}
+    configuration {"linux"}
+        defines { "ENABLE_FREE_TYPE2=1", "ENABLE_FONT_CONFIG=1"}
+        buildoptions {"-fno-rtti", "-fno-exceptions", "-Wno-unused-result"}
+    configuration {"Debug"}
+        flags { "Symbols", "EnableSSE2"}
+        defines {"_DEBUG" }
 	configuration "Release"
-		defines { "NDEBUG" , "ENABLE_FREE_TYPE2=1", "ENABLE_FONT_CONFIG=1"}
-		flags { "Optimize", "ExtraWarnings", "EnableSSE2"}
+		defines { "NDEBUG" }
+		flags { "Optimize", "EnableSSE2"}
   
 	project "picasso2_sw"
 		language "C++"
@@ -55,7 +59,7 @@ solution "picasso"
         language "C"
         kind "SharedLib"
         targetdir("bin")
-        includedirs {"third_party/libpng-1.6.17"}
+        includedirs {"third_party/libpng-1.6.17", "third_party/zlib-1.2.8"}
         libdirs { "bin" }
         defines {"ZLIB_DLL"}
         links{ "zlib" }
@@ -155,8 +159,9 @@ solution "picasso"
        
     project "psx_image"
         language "C"
-            kind "SharedLib"
             targetdir("bin")
+            kind "SharedLib"
+            defines {"EXPORT"}
             includedirs {"include", "build" , "ext/image_loader"}
             libdirs {"bin"}
             links {"picasso2_sw"}
@@ -167,6 +172,7 @@ solution "picasso"
                 files {"ext/image_loader/psx_image.rc",
                     "ext/image_loader/psx_image.def",
                     "ext/image_loader/resource.h"}
+                flags{"Unicode", "NoNativeWChar"}
         
     project "psxm_image_gif"
         language "C"
@@ -180,6 +186,8 @@ solution "picasso"
             configuration { "linux" }
                 links { "dl" }          
                 linkoptions { " -Wl,-rpath=../" }
+            configuration{"windows"}
+                flags{"Unicode", "NoNativeWChar"}
              
     project "psxm_image_jpeg"
         language "C"
@@ -194,7 +202,8 @@ solution "picasso"
                 links { "dl" }
                 linkoptions { " -Wl,-rpath=../" }  
             configuration {"windows"}
-                defines{"HAVE_BOOLEAN", "XMD_H"}      
+                defines{"HAVE_BOOLEAN", "XMD_H"}  
+                flags{"Unicode", "NoNativeWChar"}    
          
     project "psxm_image_png"
         language "C"
@@ -206,6 +215,7 @@ solution "picasso"
             links { "png", "psx_image"}
             
             configuration {"windows"}
+                flags{"Unicode", "NoNativeWChar"}
                 includedirs {"third_party/libpng-1.6.17"}
                 libdirs {"bin"}
             --png 1.6.17 crash with png 1.2.54 that gtk2.0 rely on.
@@ -226,6 +236,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
 			    linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
                 
     project "shadow"
         language "C"
@@ -241,6 +254,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "text"
         language "C"
@@ -256,6 +272,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
                 
     project "threads"
         language "C"
@@ -271,11 +290,14 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"pthread", "z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
                 
     project "image_info"
         language "C"
             targetdir("bin")
-            kind "WindowedApp"
+            kind "ConsoleApp"
             includedirs {"include", "build", "test"}
             libdirs {"bin"}
             files {"test/image_info.c"}
@@ -285,7 +307,7 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype", "fontconfig", "dl"}
-
+                
     project "image_view"
         language "C"
             targetdir("bin")
@@ -300,6 +322,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype", "dl"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "pattern"
         language "C"
@@ -315,6 +340,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
                 
     project "path"
         language "C"
@@ -329,7 +357,10 @@ solution "picasso"
                 files{"test/testGtk2.c"}
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
-                links {"z", "freetype"}                
+                links {"z", "freetype"}    
+            configuration {"windows"}
+                files{"test/testWin.c"}     
+                flags{"WinMain", "Unicode", "NoNativeWChar"}       
                 
     project "part"
         language "C"
@@ -344,7 +375,10 @@ solution "picasso"
                 files{"test/testGtk2.c"}
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
-                links {"z", "freetype"}    
+                links {"z", "freetype"}   
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
                 
     project "mask"
         language "C"
@@ -360,7 +394,10 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}    
-
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
+                
     project "gradient"
         language "C"
             targetdir("bin")
@@ -375,6 +412,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"} 
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "gcstate"
         language "C"
@@ -390,6 +430,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "gamma"
         language "C"
@@ -405,6 +448,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "composite"
         language "C"
@@ -420,6 +466,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "clip"
         language "C"
@@ -435,6 +484,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "bitblt"
         language "C"
@@ -450,6 +502,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "alpha"
         language "C"
@@ -465,6 +520,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"test/testWin.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
                 
     project "clock"
         language "C"
@@ -480,6 +538,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"demos/platform_win32.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "flowers"
         language "C"
@@ -495,6 +556,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"demos/platform_win32.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "subwaymap"
         language "C"
@@ -510,6 +574,9 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"demos/platform_win32.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
 
     project "tiger"
         language "C"
@@ -525,3 +592,6 @@ solution "picasso"
                 buildoptions {"`pkg-config --cflags gtk+-2.0`" }
                 linkoptions { "`pkg-config --libs gtk+-2.0`" , " -Wl,-rpath=./" }
                 links {"z", "freetype"}
+            configuration {"windows"}
+                files{"demos/platform_win32.c"}
+                flags{"WinMain", "Unicode", "NoNativeWChar"}
