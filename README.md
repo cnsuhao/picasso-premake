@@ -9,9 +9,6 @@ Picasso is a high quality vector graphic rendering library. It has high performa
 ### **gis maps**
 ![link](demos/gis.png)
 
-### **instrument**
-![link](demos/clock.png)
-
 ### **alpha blending**
 ![link](demos/flowers.png)
 
