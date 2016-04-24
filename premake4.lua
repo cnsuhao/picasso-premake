@@ -1,3 +1,6 @@
+--Copyright (C) 2015 Re De
+--Contact: m454078356@163.com
+
 local action = _ACTION or ""
 
 solution "picasso"

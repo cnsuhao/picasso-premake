@@ -9,7 +9,21 @@ Picasso 是一款跨平台的高级二维矢量绘图引擎。Picasso提供平�
 *   gyp在Linux上的编译存在问题， 将gyp一直到了premake4。
 *   premake已经支持 Linux，32位Windows应用程序(平台Win10, VS2015)，由于VS的64位模式中long仍然是4字节，导致指针截断(未修补)。
 *   修改部分源文件，避免在Linux Windows上编译时发生的一些错误。
+*   编译后的示例都在bin目录，其中有两个运行脚本。
+*   Re De email:m45407836@163.com
 
+### 编译方法
+
+*   如果是Linux 需要 freetype fonconfig， 编译示例还需要gtk2.0 的dev软件包。
+```bash
+premake4 gmake #Linux 
+cd proj
+make #通过make help 命令获得更多选项
+cd ../bin #运行相关的示例
+
+premake4 vs2012 #windows 
+cd ../proj #打开picasso.sln
+```
 
 =================================================
 ### **svg rendering**
