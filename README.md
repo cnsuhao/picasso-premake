@@ -6,9 +6,11 @@ Picasso 是一款跨平台的高级二维矢量绘图引擎。Picasso提供平�
 
 =================================================
 ### 修改内容：
-- gyp在Linux上的编译存在问题， 将gyp一直到了premake4。
-- premake已经支持 Linux，32位Windows应用程序(平台Win10, VS2015)，由于VS的64位模式中long仍然是4字节，导致指针截断(为修补)。
-- 修改部分源文件，避免在Linux Windows上编译时发生的一些错误。
+*   gyp在Linux上的编译存在问题， 将gyp一直到了premake4。
+*   premake已经支持 Linux，32位Windows应用程序(平台Win10, VS2015)，由于VS的64位模式中long仍然是4字节，导致指针截断(未修补)。
+*   修改部分源文件，避免在Linux Windows上编译时发生的一些错误。
+
+
 =================================================
 ### **svg rendering**
 ![link](demos/tiger.png)
