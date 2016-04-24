@@ -2,7 +2,7 @@ Picasso is a high quality vector graphic rendering library. It has high performa
 
 =================================================
 ### **alpha blending**
-![](https://github.com/onecoolx/picasso/blob/master/demos/flowers.png)
+![](http://git.oschina.net/mxqos/picasso-premake/tree/master/demos/flowers.png)
 
 ### **svg rendering**
 ![](https://github.com/onecoolx/picasso/blob/master/demos/tiger.png)
