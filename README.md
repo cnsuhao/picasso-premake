@@ -19,6 +19,7 @@ premake4 gmake #Linux
 cd proj
 make #通过make help 命令获得更多选项
 cd ../bin #运行相关的示例
+#======================
 premake4 vs2012 #windows 
 cd ../proj #打开picasso.sln
 
