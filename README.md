@@ -47,7 +47,7 @@ void init_context (ps_context* gc, ps_canvas* cs, unsigned char* buf)
     float version = (float)ps_version() / 10000;
     fprintf(stderr, "picasso version %.2f\n", version);
 	ps_point point = {300,300};
-    //=======================
+    //创建路径
     pa = ps_path_create();
     ps_path_add_arc(pa, &point, 100, 0, 6.29, 1);
     //=======================
