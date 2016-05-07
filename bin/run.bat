@@ -1,3 +1,5 @@
+@echo off
+
 echo require psx_image and modules : psxm_image_gif psxm_image_png psxm_image_jpeg
 
 image_view 2.gif

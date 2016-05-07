@@ -8,7 +8,7 @@ solution "picasso"
 	configurations { "Debug", "Release" }
 	platforms {"x64", "x32"}
     configuration {"windows"}
-        defines {"WIN32", "DLL_EXPORT", "__SSE2__=1", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS", "ENABLE_FAST_COPY=1"}
+        defines {"WIN32", "DLL_EXPORT", "__SSE2__=1", "_HAS_EXCEPTIONS=0", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS", "ENABLE_FAST_COPY=1"}
     configuration {"linux"}
         defines { "ENABLE_FREE_TYPE2=1", "ENABLE_FONT_CONFIG=1"}
         buildoptions {"-fno-exceptions", "-Wno-unused-result"}
@@ -29,7 +29,8 @@ solution "picasso"
         configuration { "linux" }
 		        links { "freetype", "fontconfig"}
         configuration { "windows" }
-                files { "src/picasso.def", "src/picasso.rc"}
+                files { "src/picasso.def", 
+                        "src/picasso.rc"}
 
 	
     project "zlib"

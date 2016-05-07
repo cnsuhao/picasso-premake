@@ -59,7 +59,7 @@ void draw_test (int id, ps_context* gc)
 
   //  ps_set_text_render_type(gc, TEXT_TYPE_MONO);
     ps_set_text_matrix(gc, pn);
-    ps_text_out_length(gc, 100, 100, text, strlen(text));
+    ps_text_out_length(gc, 100, 100, text, (int)strlen(text));
 
 
 /*    
@@ -129,7 +129,7 @@ void init_context (ps_context* gc, ps_canvas* cs, unsigned char* buf)
     pm = ps_matrix_create();
     pn = ps_matrix_create();
 
-    pf = ps_font_create("ËÎÌå", CHARSET_UNICODE,48, FONT_WEIGHT_BOLD, False);
+    pf = ps_font_create("ï¿½ï¿½ï¿½ï¿½", CHARSET_UNICODE,48, FONT_WEIGHT_BOLD, False);
 
     p[0].x = 150;
     p[0].y = 100;

@@ -517,7 +517,7 @@ public:
         remove_all();
     }
     
-    byte* allocate(unsigned long size, long alignment = 1)
+    byte* allocate(unsigned int size, unsigned int alignment = 1)
     {
         if (!size)
             return 0;
@@ -525,7 +525,7 @@ public:
         if (size <= m_remain_size) {
             byte* ptr = m_buf_ptr;
             if (alignment > 1) {
-                long align = (alignment - ((unsigned long)(ptr)) % alignment) % alignment;
+                unsigned int align = (unsigned int)((alignment - ((intptr_t)(ptr)) % alignment) % alignment);
 
                 size += align;
                 ptr += align;
